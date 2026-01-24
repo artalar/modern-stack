@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { reatomNumber, wrap } from '@reatom/core'
+import { reatomFactoryComponent } from '@reatom/react'
 
-export function Counter({ initial = 0 }: { initial?: number }) {
-	const [count, setCount] = useState(initial)
+export const Counter = reatomFactoryComponent<{ initial?: number }>(({ initial = 0 }, { name }) => {
+	const countAtom = reatomNumber(initial, `${name}.count`)
 
-	return (
+	return () => (
 		<div>
-			<span>{count}</span>
-			<button onClick={() => setCount((c) => c - 1)}>-</button>
-			<button onClick={() => setCount((c) => c + 1)}>+</button>
+			<span>{countAtom()}</span>
+			<button onClick={wrap(() => countAtom.decrement())}>-</button>
+			<button onClick={wrap(() => countAtom.increment())}>+</button>
 		</div>
 	)
-}
+})

@@ -3,7 +3,8 @@ pre-commit:
   commands:
     format:
       glob: '*.{js,ts,jsx,tsx,json,html}'
-      run: bunx oxfmt --check {staged_files}
+      run: bunx oxfmt --write {staged_files}
+      stage_fixed: true
     lint:
       glob: '*.{js,ts,jsx,tsx}'
       run: bunx oxlint {staged_files}

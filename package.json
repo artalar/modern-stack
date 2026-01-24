@@ -19,6 +19,8 @@
 		"typecheck": "tsc -b --noEmit"
 	},
 	"dependencies": {
+		"@reatom/core": "^1000.10.0",
+		"@reatom/react": "^1000.2.1",
 		"react": "^19.2.3",
 		"react-dom": "^19.2.3"
 	},
