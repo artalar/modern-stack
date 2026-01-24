@@ -1,12 +1,13 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 
-function App() {
-  return <h1>Modern Stack</h1>;
-}
+import { App } from '#app/App.tsx'
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+const root = document.getElementById('root')
+if (!root) throw new Error('Root element not found')
+
+createRoot(root).render(
+	<StrictMode>
+		<App />
+	</StrictMode>,
+)
