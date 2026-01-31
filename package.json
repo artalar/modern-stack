@@ -38,6 +38,7 @@
 		"@storybook/addon-onboarding": "^10.2.0",
 		"@storybook/addon-vitest": "^10.2.0",
 		"@storybook/react-vite": "^10.2.0",
+		"@total-typescript/ts-reset": "^0.6.1",
 		"@types/bun": "latest",
 		"@types/react": "^19.2.9",
 		"@types/react-dom": "^19.2.3",
