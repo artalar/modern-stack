@@ -1,3 +1,4 @@
+import { DevTools } from '@vitejs/devtools'
 import react from '@vitejs/plugin-react'
 import assert from 'node:assert'
 import { defineConfig } from 'vite'
@@ -8,7 +9,10 @@ assert(outDir, 'WEBAPP_OUT_DIR env var is not set')
 assert(base, 'WEBAPP_BASE_URL env var is not set')
 
 export default defineConfig(() => ({
-	build: { outDir },
-	plugins: [react()],
+	build: { outDir, rolldownOptions: { devtools: {} } },
+	plugins: [react(), DevTools()],
 	base,
+	devtools: {
+		enabled: true,
+	},
 }))
