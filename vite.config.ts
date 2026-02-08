@@ -9,10 +9,39 @@ assert(outDir, 'WEBAPP_OUT_DIR env var is not set')
 assert(base, 'WEBAPP_BASE_URL env var is not set')
 
 export default defineConfig(() => ({
-	build: { outDir, rolldownOptions: { devtools: {} } },
+	build: {
+		outDir,
+		rolldownOptions: {
+			devtools: {},
+			output: {
+				codeSplitting: {
+					groups: [
+						{
+							name: 'react-vendor',
+							test: /node_modules[\\/](react|react-dom)([\\/]|$)/,
+							priority: 30,
+						},
+						{
+							name: 'ui-vendor',
+							test: /node_modules[\\/](@ark|@ui|@zag-js)/,
+							priority: 15,
+						},
+						{
+							name: 'vendor',
+							test: /node_modules/,
+							priority: 10,
+						},
+						{
+							name: 'common',
+							minShareCount: 2,
+							minSize: 10000,
+							priority: 5,
+						},
+					],
+				},
+			},
+		},
+	},
 	plugins: [react(), DevTools()],
 	base,
-	devtools: {
-		enabled: true,
-	},
 }))
