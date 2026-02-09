@@ -7,6 +7,7 @@ const outDir = process.env['WEBAPP_OUT_DIR']
 const base = process.env['WEBAPP_BASE_URL']
 assert(outDir, 'WEBAPP_OUT_DIR env var is not set')
 assert(base, 'WEBAPP_BASE_URL env var is not set')
+const enableDevTools = process.env['VITE_ENABLE_DEVTOOLS'] === 'true'
 
 export default defineConfig(() => ({
 	build: {
@@ -42,6 +43,10 @@ export default defineConfig(() => ({
 			},
 		},
 	},
-	plugins: [react(), DevTools()],
+	plugins: [
+		//
+		react(),
+		enableDevTools && DevTools(),
+	].filter(Boolean),
 	base,
 }))
