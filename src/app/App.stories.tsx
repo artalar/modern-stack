@@ -1,4 +1,4 @@
-import { expect, waitFor, within } from 'storybook/test'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -62,4 +62,44 @@ Default.test('submits updated counter value to mocked api', async ({ canvas }) =
 		const payload = (await response.json()) as { data: { value: number } }
 		expect(payload.data.value).toBe(11)
 	})
+})
+
+Default.test('creates a new counter from form values', async ({ canvas }) => {
+	const nameInput = (await canvas.findByLabelText('Counter name')) as HTMLInputElement
+	const initialValueInput = (await canvas.findByLabelText('Initial value')) as HTMLInputElement
+
+	await userEvent.clear(nameInput)
+	await userEvent.type(nameInput, 'Story counter')
+
+	await userEvent.clear(initialValueInput)
+	await userEvent.type(initialValueInput, '42')
+
+	const submitButton = await canvas.findByRole('button', { name: 'Add counter' })
+	await submitButton.click()
+
+	await canvas.findByRole('heading', { name: 'Story counter' })
+
+	await waitFor(async () => {
+		const response = await fetch('/api/counters')
+		const payload = (await response.json()) as { data: Array<{ label: string; value: number }> }
+		expect(
+			payload.data.some((counter) => counter.label === 'Story counter' && counter.value === 42),
+		).toBe(true)
+	})
+})
+
+Default.test('deletes a counter', async ({ canvas }) => {
+	const counter1Heading = await canvas.findByRole('heading', { name: 'Main counter' })
+	const counterSection = counter1Heading.closest('div')
+	expect(counterSection).not.toBeNull()
+
+	const deleteButton = within(counterSection!).getByRole('button', { name: 'Delete' })
+	await deleteButton.click()
+
+	await waitFor(() => {
+		expect(canvas.queryByRole('heading', { name: 'Main counter' })).not.toBeInTheDocument()
+	})
+
+	const response = await fetch('/api/counters/counter-1')
+	expect(response.status).toBe(404)
 })
