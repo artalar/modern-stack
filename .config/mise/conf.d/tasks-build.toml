@@ -49,9 +49,10 @@ run = [{ task = "build:webapp" }, { task = "build:storybook" }]
 
 [tasks."build:gh-pages"]
 description = "Prepare deployment artifacts (combine builds for GitHub Pages)"
+env = { VITE_ENABLE_MSW = "true" }
 run = [
 	"mise run build:webapp:base {{ vars.gh_pages_out_dir }} /modern-stack/",
-	"mise run build:storybook:base {{ vars.gh_pages_out_dir }}/storybook /modern-stack/storybook",
+	"mise run build:storybook:base {{ vars.gh_pages_out_dir }}/storybook /modern-stack/storybook/",
 ]
 sources = ["src/**/*.{ts,tsx}", "index.html", "vite.config.ts", ".storybook/**/*"]
 outputs = ["{{ vars.gh_pages_out_dir }}/**/*"]

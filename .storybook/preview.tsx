@@ -12,7 +12,13 @@ import { handlersArray } from '#app/mocks/handlers.ts'
 import { resetCounterStore } from '#counter/mocks/store.ts'
 import { css } from '#styled-system/css'
 
-initialize({ onUnhandledRequest: 'bypass', quiet: true })
+initialize({
+	onUnhandledRequest: 'bypass',
+	quiet: true,
+	serviceWorker: {
+		url: `${import.meta.env['BASE_URL']}mockServiceWorker.js`,
+	},
+})
 
 function ReatomDecorator({ children }: PropsWithChildren) {
 	resetCounterStore()
