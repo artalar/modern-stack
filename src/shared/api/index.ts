@@ -24,7 +24,7 @@ type RequestOptions = Omit<RequestInit, 'body'> & {
 	body?: unknown
 }
 
-async function parseResponsePayload(response: Response): Promise<unknown> {
+async function parseResponsePayload(response: Response) {
 	if (response.status === 204) {
 		return null
 	}
@@ -36,7 +36,7 @@ async function parseResponsePayload(response: Response): Promise<unknown> {
 	return response.text()
 }
 
-async function request<TResponse>(path: string, options: RequestOptions = {}): Promise<TResponse> {
+async function request<TResponse>(path: string, options: RequestOptions = {}) {
 	const { body, headers, ...restOptions } = options
 
 	const requestHeaders = new Headers(headers)

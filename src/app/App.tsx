@@ -1,6 +1,6 @@
 import { assert, wrap } from '@reatom/core'
 import { bindField, reatomComponent } from '@reatom/react'
-import { Fragment } from 'react'
+import { Fragment, type ReactNode } from 'react'
 
 import { Counter } from '#counter/Counter.tsx'
 import { Button } from '#shared/components/ui'
@@ -8,6 +8,33 @@ import { styled } from '#styled-system/jsx'
 import { container } from '#styled-system/patterns'
 
 import { rootRoute } from './routes'
+
+function PageShell({ children }: { children: ReactNode }): ReactNode {
+	return (
+		<main className={container({ maxW: '4xl', p: '8' })}>
+			<styled.h1 fontSize="4xl" fontWeight="bold" mb="6">
+				Modern Stack
+			</styled.h1>
+			{children}
+		</main>
+	)
+}
+
+const FieldError = reatomComponent(function FieldError({
+	field,
+}: {
+	field: { validation: () => { triggered: boolean; error: string | undefined } }
+}) {
+	const { triggered, error } = field.validation()
+	if (!triggered || !error) {
+		return null
+	}
+	return (
+		<styled.p color="red.700" fontSize="sm">
+			{error}
+		</styled.p>
+	)
+}, 'FieldError')
 
 export const App = reatomComponent(function App() {
 	const match = rootRoute()
@@ -26,23 +53,17 @@ export const App = reatomComponent(function App() {
 
 	if (error) {
 		return (
-			<main className={container({ maxW: '4xl', p: '8' })}>
-				<styled.h1 fontSize="4xl" fontWeight="bold" mb="6">
-					Modern Stack
-				</styled.h1>
+			<PageShell>
 				<styled.p color="red.700">Failed to load counters.</styled.p>
-			</main>
+			</PageShell>
 		)
 	}
 
 	if (!ready) {
 		return (
-			<main className={container({ maxW: '4xl', p: '8' })}>
-				<styled.h1 fontSize="4xl" fontWeight="bold" mb="6">
-					Modern Stack
-				</styled.h1>
+			<PageShell>
 				<styled.p>Loading counters...</styled.p>
-			</main>
+			</PageShell>
 		)
 	}
 
@@ -62,33 +83,18 @@ export const App = reatomComponent(function App() {
 		createCounterForm.validation().errors.length === 0
 			? submitCreateCounter.error()?.message
 			: undefined
-	const { error: ignoredNameFieldError, ...nameFieldProps } = bindField(
-		createCounterForm.fields.name,
-	)
-	void ignoredNameFieldError
-	const { error: ignoredInitialValueFieldError, ...initialValueFieldProps } = bindField(
+	const { error: _nameError, ...nameFieldProps } = bindField(createCounterForm.fields.name)
+	const { error: _initialValueError, ...initialValueFieldProps } = bindField(
 		createCounterForm.fields.initialValue,
 	)
-	void ignoredInitialValueFieldError
 
 	return (
-		<main className={container({ maxW: '4xl', p: '8' })}>
-			<styled.h1 fontSize="4xl" fontWeight="bold" mb="6">
-				Modern Stack
-			</styled.h1>
+		<PageShell>
 			<styled.section mb="8">
 				<styled.h2 fontSize="2xl" fontWeight="semibold" mb="4">
 					Create counter
 				</styled.h2>
-				<styled.form
-					display="grid"
-					gap="3"
-					maxW="sm"
-					onSubmit={(event) => {
-						event.preventDefault()
-						handleCreateCounterSubmit(event)
-					}}
-				>
+				<styled.form display="grid" gap="3" maxW="sm" onSubmit={handleCreateCounterSubmit}>
 					<styled.label display="grid" gap="1" fontSize="sm" fontWeight="medium">
 						Counter name
 						<styled.input
@@ -102,12 +108,7 @@ export const App = reatomComponent(function App() {
 							bg="white"
 						/>
 					</styled.label>
-					{createCounterForm.fields.name.validation().triggered &&
-						createCounterForm.fields.name.validation().error && (
-							<styled.p color="red.700" fontSize="sm">
-								{createCounterForm.fields.name.validation().error}
-							</styled.p>
-						)}
+					<FieldError field={createCounterForm.fields.name} />
 
 					<styled.label display="grid" gap="1" fontSize="sm" fontWeight="medium">
 						Initial value
@@ -122,12 +123,7 @@ export const App = reatomComponent(function App() {
 							bg="white"
 						/>
 					</styled.label>
-					{createCounterForm.fields.initialValue.validation().triggered &&
-						createCounterForm.fields.initialValue.validation().error && (
-							<styled.p color="red.700" fontSize="sm">
-								{createCounterForm.fields.initialValue.validation().error}
-							</styled.p>
-						)}
+					<FieldError field={createCounterForm.fields.initialValue} />
 
 					<Button
 						type="submit"
@@ -173,6 +169,6 @@ export const App = reatomComponent(function App() {
 					<Counter countAtom={counter.countAtom} />
 				</Fragment>
 			))}
-		</main>
+		</PageShell>
 	)
 })

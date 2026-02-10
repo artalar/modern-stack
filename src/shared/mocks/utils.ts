@@ -1,7 +1,7 @@
 import { noop } from '@reatom/core'
 import { HttpResponse, type JsonBodyType } from 'msw'
 
-export const getParam = (param: string | readonly string[] | undefined): string | undefined => {
+export function getParam(param: string | readonly string[] | undefined) {
 	if (typeof param === 'string') {
 		return param
 	}
@@ -11,43 +11,38 @@ export const getParam = (param: string | readonly string[] | undefined): string 
 	return undefined
 }
 
-export const to404 = (payload: JsonBodyType = { error: [] }) =>
-	HttpResponse.json(payload, { status: 404 })
+function toHttpError(status: number, payload: JsonBodyType = { error: [] }) {
+	return HttpResponse.json(payload, { status })
+}
 
-export class Error404 extends Error {
-	readonly response: ReturnType<typeof to404>
+function createHttpErrorClass(status: number, name: string) {
+	return class extends Error {
+		readonly response: Response
 
-	constructor(...args: ConstructorParameters<typeof Error>) {
-		super(...args)
-		this.name = 'Error404'
-		this.response = to404({ error: { message: args[0] } })
+		constructor(...args: ConstructorParameters<typeof Error>) {
+			super(...args)
+			this.name = name
+			this.response = toHttpError(status, { error: { message: args[0] } })
+		}
 	}
 }
 
-export const to400 = (payload: JsonBodyType = { error: [] }) =>
-	HttpResponse.json(payload, { status: 400 })
+export const Error400 = createHttpErrorClass(400, 'Error400')
+export const Error404 = createHttpErrorClass(404, 'Error404')
+export const Error500 = createHttpErrorClass(500, 'Error500')
 
-export class Error400 extends Error {
-	readonly response: ReturnType<typeof to400>
-
-	constructor(...args: ConstructorParameters<typeof Error>) {
-		super(...args)
-		this.name = 'Error400'
-		this.response = to400({ error: { message: args[0] } })
-	}
+export function to400(payload?: JsonBodyType) {
+	return toHttpError(400, payload)
 }
 
-export const to500 = (payload: JsonBodyType = { error: ['Server error'] }) =>
-	HttpResponse.json(payload, { status: 500 })
-
-export class Error500 extends Error {
-	readonly response: ReturnType<typeof to500>
-
-	constructor(...args: ConstructorParameters<typeof Error>) {
-		super(...args)
-		this.name = 'Error500'
-		this.response = to500({ error: { message: args[0] } })
-	}
+export function to404(payload?: JsonBodyType) {
+	return toHttpError(404, payload)
 }
 
-export const neverResolve = async (): Promise<never> => new Promise(noop)
+export function to500(payload?: JsonBodyType) {
+	return toHttpError(500, payload)
+}
+
+export async function neverResolve(): Promise<never> {
+	return new Promise(noop)
+}
