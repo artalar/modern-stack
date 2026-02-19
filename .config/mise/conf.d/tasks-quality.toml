@@ -21,12 +21,21 @@ description = "Type check with TypeScript"
 alias = "tc"
 run = "tsc -b"
 
+[tasks."lint:circular"]
+description = "Check for circular dependencies with madge"
+run = "madge -c ./src/main.tsx --ts-config ./tsconfig.app.json --exclude styled-system"
+
+[tasks."lint:steiger"]
+description = "Check FSD architecture with steiger"
+run = "bun scripts/steiger.ts"
+
 [tasks.validate]
 description = "Run all quality checks (format, lint, typecheck, test). Default validation task for LLMs"
 run = [ #
 	{ task = "prepare" },
 	{ task = "format" },
-	{ tasks = ["lint:fix", "typecheck", "test:run"] },
+	{ task = "lint:fix" },
+	{ tasks = ["typecheck", "test:run", "lint:circular", "lint:steiger"] },
 ]
 
 [tasks.ci]
@@ -34,7 +43,11 @@ description = "Run all CI checks. No auto-fixes"
 run = [
 	{ task = "format:check" },
 	{ task = "lint" },
-	{ task = "typecheck" },
+	{ tasks = [
+		"typecheck",
+		"lint:circular",
+		"lint:steiger",
+	] },
 	{ task = "test:coverage" },
 	{ task = "build" },
 ]

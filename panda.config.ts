@@ -2,9 +2,12 @@ import { defineConfig } from '@pandacss/dev'
 import assert from 'node:assert'
 
 import { animationStyles } from '#theme/animation-styles.ts'
+import { blue } from '#theme/colors/blue'
 import { green } from '#theme/colors/green.ts'
+import { indigo } from '#theme/colors/indigo'
 import { olive } from '#theme/colors/olive.ts'
 import { orange } from '#theme/colors/orange.ts'
+import { purple } from '#theme/colors/purple'
 import { red } from '#theme/colors/red.ts'
 import { conditions } from '#theme/conditions.ts'
 import { globalCss } from '#theme/global-css.ts'
@@ -90,6 +93,9 @@ export default defineConfig({
 					gray: olive,
 					red: red,
 					green: green,
+					blue: blue,
+					indigo: indigo,
+					purple: purple,
 				},
 
 				shadows: shadows,

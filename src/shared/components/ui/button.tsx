@@ -1,6 +1,7 @@
 'use client'
 import { ark } from '@ark-ui/react/factory'
 import { createContext, mergeProps } from '@ark-ui/react/utils'
+// oxlint-disable-next-line no-restricted-imports
 import { type ComponentProps, useMemo } from 'react'
 
 import { styled } from '#styled-system/jsx'

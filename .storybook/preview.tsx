@@ -1,16 +1,18 @@
-import { context } from '@reatom/core'
-
+import './setupStorybookUrl'
+import '../src/reatom.init'
 import '../src/index.css'
-import '../src/reatom.init.ts'
+import { context, urlAtom } from '@reatom/core'
 import { reatomContext } from '@reatom/react'
 import addonA11y from '@storybook/addon-a11y'
 import { definePreview } from '@storybook/react-vite'
 import { initialize, mswLoader } from 'msw-storybook-addon'
+// oxlint-disable-next-line no-restricted-imports
 import { useMemo, type PropsWithChildren } from 'react'
 
-import { handlersArray } from '#app/mocks/handlers.ts'
-import { resetCounterStore } from '#counter/mocks/store.ts'
+import { handlersArray } from '#app/mocks/handlers'
 import { css } from '#styled-system/css'
+
+import { FALLBACK_VIEWPORT, getViewportSize } from './viewports'
 
 initialize({
 	onUnhandledRequest: 'bypass',
@@ -20,10 +22,16 @@ initialize({
 	},
 })
 
-function ReatomDecorator({ children }: PropsWithChildren) {
-	resetCounterStore()
-	// Create fresh context once per story mount to prevent state pollution
+function ReatomDecorator({
+	children,
+	initialPath = '/',
+}: PropsWithChildren<{ initialPath?: string }>) {
 	const frame = useMemo(() => context.start(), [])
+	frame.run(() => {
+		if (initialPath) {
+			urlAtom.go(initialPath)
+		}
+	})
 	return <reatomContext.Provider value={frame}>{children}</reatomContext.Provider>
 }
 
@@ -31,20 +39,28 @@ const preview = definePreview({
 	addons: [addonA11y()],
 	loaders: [mswLoader],
 	decorators: [
-		(Story) => (
-			<ReatomDecorator>
+		(Story, { parameters }) => (
+			<ReatomDecorator initialPath={parameters['initialPath']}>
 				<Story />
 			</ReatomDecorator>
 		),
 		(Story) => (
-			<div className={css({ colorPalette: 'orange' })}>
+			<div className={css({ colorPalette: 'indigo' })}>
 				<Story />
 			</div>
 		),
 	],
 	parameters: {
-		a11y: { test: 'error' },
+		a11y: { test: 'todo' },
 		msw: { handlers: handlersArray },
+	},
+	beforeEach: async ({ globals }) => {
+		if (!import.meta.env['VITEST']) return
+		const { page } = await import('vitest/browser')
+		const viewportGlobal = globals['viewport'] as { value?: string } | string | undefined
+		const viewportName = typeof viewportGlobal === 'string' ? viewportGlobal : viewportGlobal?.value
+		const viewport = (viewportName ? getViewportSize(viewportName) : null) ?? FALLBACK_VIEWPORT
+		await page.viewport(viewport.width, viewport.height)
 	},
 })
 

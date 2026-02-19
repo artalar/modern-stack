@@ -1,0 +1,27 @@
+{
+	"rules": {
+		"eslint/no-restricted-imports": [
+			"error",
+			{
+				"paths": [
+					{
+						"name": "react",
+						"importNames": [
+							"useEffect",
+							"useLayoutEffect",
+							"useMemo",
+							"useCallback",
+							"useState",
+							"useRef",
+							"useContext",
+							"useReducer",
+							"useImperativeHandle",
+							"useDebugValue"
+						],
+						"message": "Find appropriate solution with reatom or ask user for guidance."
+					}
+				]
+			}
+		]
+	}
+}

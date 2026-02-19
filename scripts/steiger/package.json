@@ -1,0 +1,6 @@
+{
+	"devDependencies": {
+		"@feature-sliced/steiger-plugin": "^0.5.7",
+		"steiger": "^0.5.11"
+	}
+}

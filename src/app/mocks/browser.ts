@@ -1,10 +1,11 @@
 export async function startBrowserMocking(): Promise<void> {
-	if (!import.meta.env['VITE_ENABLE_MSW']) {
+	const enableMswEnvironmentValue = import.meta.env['VITE_ENABLE_MSW']
+	const shouldEnableMocking =
+		enableMswEnvironmentValue === undefined || enableMswEnvironmentValue === 'true'
+
+	if (!shouldEnableMocking) {
 		return
 	}
-
-	const { resetMockStores } = await import('#shared/mocks/stores.ts')
-	resetMockStores()
 
 	const { handlersArray } = await import('./handlers.ts')
 
