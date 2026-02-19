@@ -1,5 +1,4 @@
 import '../src/reatom.init'
-import './setupStorybookUrl'
 import '../src/index.css'
 import { context, urlAtom } from '@reatom/core'
 import { reatomContext } from '@reatom/react'
@@ -12,6 +11,7 @@ import { useMemo, type PropsWithChildren } from 'react'
 import { handlersArray } from '#app/mocks/handlers'
 import { css } from '#styled-system/css'
 
+import { setupStorybookUrl } from './setupStorybookUrl'
 import { FALLBACK_VIEWPORT, getViewportSize } from './viewports'
 
 initialize({
@@ -28,6 +28,7 @@ function ReatomDecorator({
 }: PropsWithChildren<{ initialPath?: string }>) {
 	const frame = useMemo(() => context.start(), [])
 	frame.run(() => {
+		setupStorybookUrl()
 		if (initialPath) {
 			urlAtom.go(initialPath)
 		}
