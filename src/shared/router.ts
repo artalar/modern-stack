@@ -25,7 +25,10 @@ export function getFirstOutletChild(
 	return fallback
 }
 
+// @ts-expect-error - Vite replaces this with the actual value at build time
+const base = import.meta.env.BASE_URL?.replace(/^\//, '') ?? ''
+
 export const rootRoute = reatomRoute(
-	{ path: '', render: (self) => getFirstOutletChild(self, createElement(Fragment)) },
+	{ path: base, render: (self) => getFirstOutletChild(self, createElement(Fragment)) },
 	'rootRoute',
 )
