@@ -29,9 +29,9 @@ function ReatomDecorator({
 	const frame = useMemo(() => context.start(), [])
 	frame.run(() => {
 		setupStorybookUrl()
-		if (initialPath) {
-			urlAtom.go(initialPath)
-		}
+		// @ts-expect-error - Vite replaces this with the actual value at build time
+		const base = import.meta.env.BASE_URL?.replace(/^\//, '') ?? ''
+		urlAtom.go(base + initialPath)
 	})
 	return <reatomContext.Provider value={frame}>{children}</reatomContext.Provider>
 }
