@@ -5,8 +5,4 @@ import { noop, urlAtom, withChangeHook } from '@reatom/core'
 // Must run before reatom.init (clearStack) since it needs a context frame.
 const originalHref = window.location.href
 urlAtom.sync.set(() => noop)
-urlAtom.extend(
-	withChangeHook(() => {
-		window.history.replaceState({}, '', originalHref)
-	}),
-)
+urlAtom.extend(withChangeHook(() => void window.history.replaceState({}, '', originalHref)))

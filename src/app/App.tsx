@@ -1,4 +1,4 @@
-import { effect } from '@reatom/core'
+import { withConnectHook } from '@reatom/core'
 import { reatomComponent } from '@reatom/react'
 
 import { styled } from '#styled-system/jsx'
@@ -10,12 +10,17 @@ import { dashboardRoute, rootRoute } from './routes'
 import { SidebarFooterNavigation } from './SidebarFooterNavigation'
 import { SidebarNavigation } from './SidebarNavigation'
 
+rootRoute.extend(
+	withConnectHook((target) => {
+		return target.exact.subscribe((isExact) => {
+			if (isExact) {
+				dashboardRoute.go(undefined, true)
+			}
+		})
+	}),
+)
+
 export const App = reatomComponent(() => {
-	effect(() => {
-		if (rootRoute.exact()) {
-			dashboardRoute.go(undefined, true)
-		}
-	})
 	return (
 		<AppShell
 			sidebarHeader={
