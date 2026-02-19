@@ -1,5 +1,5 @@
-import './setupStorybookUrl'
 import '../src/reatom.init'
+import './setupStorybookUrl'
 import '../src/index.css'
 import { context, urlAtom } from '@reatom/core'
 import { reatomContext } from '@reatom/react'
