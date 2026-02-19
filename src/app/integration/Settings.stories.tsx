@@ -19,6 +19,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Settings',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'settings' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -26,7 +27,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders settings heading', async () => {
 	await I.see(loc.settingsHeadingAppears)
@@ -45,6 +46,7 @@ Default.test('renders Appearance section', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 

@@ -23,6 +23,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Usage',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'usage' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -30,7 +31,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders usage heading', async () => {
 	await I.see(loc.usageHeadingAppears)
@@ -48,6 +49,7 @@ Default.test('renders breakdown section', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 

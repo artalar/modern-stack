@@ -38,6 +38,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Dashboard',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'dashboard' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -45,7 +46,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders dashboard heading', async () => {
 	await I.see(loc.dashboardHeadingAppears)
@@ -58,6 +59,7 @@ Default.test('renders stat cards', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 
@@ -70,6 +72,7 @@ DefaultMobile.test('[mobile] renders stat cards', async () => {
 })
 
 export const HandlesDashboardLoadServerError = meta.story({
+	name: 'Dashboard Load Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(dashboardApiUrl, to500), ...handlersArray],
@@ -93,6 +96,7 @@ HandlesDashboardLoadServerError.test('shows retry button on error', async () => 
 })
 
 export const HandlesDashboardLoadServerErrorMobile = meta.story({
+	name: 'Dashboard Load Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -120,6 +124,7 @@ HandlesDashboardLoadServerErrorMobile.test('[mobile] shows retry button on error
 })
 
 export const KeepsLoadingWhenDashboardRequestNeverResolves = meta.story({
+	name: 'Dashboard Request Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(dashboardApiUrl, neverResolve), ...handlersArray],
@@ -136,6 +141,7 @@ KeepsLoadingWhenDashboardRequestNeverResolves.test(
 )
 
 export const KeepsLoadingWhenDashboardRequestNeverResolvesMobile = meta.story({
+	name: 'Dashboard Request Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {

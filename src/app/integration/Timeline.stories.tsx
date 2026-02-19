@@ -40,6 +40,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Timeline',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'timeline' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -47,7 +48,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders timeline events', async () => {
 	await I.seeTimelineEvents()
@@ -58,6 +59,7 @@ Default.test('shows date groups', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 
@@ -70,6 +72,7 @@ DefaultMobile.test('[mobile] shows date groups', async () => {
 })
 
 export const HandlesTimelineLoadServerError = meta.story({
+	name: 'Timeline Load Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(timelineApiUrl, to500), ...handlersArray],
@@ -93,6 +96,7 @@ HandlesTimelineLoadServerError.test('shows retry button on error', async () => {
 })
 
 export const HandlesTimelineLoadServerErrorMobile = meta.story({
+	name: 'Timeline Load Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -120,6 +124,7 @@ HandlesTimelineLoadServerErrorMobile.test('[mobile] shows retry button on error'
 })
 
 export const KeepsLoadingWhenTimelineRequestNeverResolves = meta.story({
+	name: 'Timeline Request Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(timelineApiUrl, neverResolve), ...handlersArray],
@@ -136,6 +141,7 @@ KeepsLoadingWhenTimelineRequestNeverResolves.test(
 )
 
 export const KeepsLoadingWhenTimelineRequestNeverResolvesMobile = meta.story({
+	name: 'Timeline Request Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {

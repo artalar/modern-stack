@@ -10,6 +10,7 @@ const loc = {
 const I = createMyself(() => ({}))
 
 const meta = preview.meta({
+	title: 'Integration/Sidebar Footer',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'dashboard' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -17,7 +18,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('shows usage storage card in sidebar footer', async () => {
 	await I.see(loc.storageProgressNoteAppears)
@@ -28,6 +29,7 @@ Default.test('shows upgrade to pro banner in sidebar footer', async () => {
 })
 
 export const ActiveUsageRoute = meta.story({
+	name: 'Active Usage Route',
 	parameters: { initialPath: 'usage' },
 })
 
@@ -44,6 +46,7 @@ ActiveUsageRoute.test('marks usage card as current page in sidebar', async () =>
 })
 
 export const ActivePricingRoute = meta.story({
+	name: 'Active Pricing Route',
 	parameters: { initialPath: 'pricing' },
 })
 

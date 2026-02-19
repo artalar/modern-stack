@@ -21,6 +21,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Pages/Timer',
 	component: TimerPage,
 	parameters: { layout: 'centered' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -28,7 +29,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders timer and starts/pauses/resets', async () => {
 	await I.see(loc.heading)

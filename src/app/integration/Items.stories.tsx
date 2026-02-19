@@ -47,6 +47,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Items',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'items' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -54,7 +55,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders items list', async () => {
 	await I.seeItemsList()
@@ -69,6 +70,7 @@ Default.test('shows Out of Stock badge', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 
@@ -81,6 +83,7 @@ DefaultMobile.test('[mobile] shows category badges', async () => {
 })
 
 export const HandlesItemsLoadServerError = meta.story({
+	name: 'Items Load Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(itemsApiUrl, to500), ...handlersArray],
@@ -104,6 +107,7 @@ HandlesItemsLoadServerError.test('shows retry button on error', async () => {
 })
 
 export const HandlesItemsLoadServerErrorMobile = meta.story({
+	name: 'Items Load Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -131,6 +135,7 @@ HandlesItemsLoadServerErrorMobile.test('[mobile] shows retry button on error', a
 })
 
 export const KeepsLoadingWhenItemsRequestNeverResolves = meta.story({
+	name: 'Items Request Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(itemsApiUrl, neverResolve), ...handlersArray],
@@ -147,6 +152,7 @@ KeepsLoadingWhenItemsRequestNeverResolves.test(
 )
 
 export const KeepsLoadingWhenItemsRequestNeverResolvesMobile = meta.story({
+	name: 'Items Request Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {

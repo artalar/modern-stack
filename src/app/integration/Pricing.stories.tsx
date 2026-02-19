@@ -19,6 +19,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Pricing',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'pricing' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -26,7 +27,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders pricing heading', async () => {
 	await I.see(loc.pricingHeadingAppears)
@@ -37,6 +38,7 @@ Default.test('renders all plan cards', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 

@@ -56,6 +56,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Chat',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'chat' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -63,7 +64,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders conversation list', async () => {
 	await I.seeConversationList()
@@ -82,6 +83,7 @@ Default.test('shows message thread when conversation is clicked', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 
@@ -104,6 +106,7 @@ DefaultMobile.test('[mobile] can navigate back to conversation list', async () =
 })
 
 export const HandlesChatLoadServerError = meta.story({
+	name: 'Conversations Load Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(conversationsApiUrl, to500), ...handlersArray],
@@ -127,6 +130,7 @@ HandlesChatLoadServerError.test('shows retry button on error', async () => {
 })
 
 export const HandlesChatLoadServerErrorMobile = meta.story({
+	name: 'Conversations Load Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -154,6 +158,7 @@ HandlesChatLoadServerErrorMobile.test('[mobile] shows retry button on error', as
 })
 
 export const KeepsLoadingWhenChatRequestNeverResolves = meta.story({
+	name: 'Conversations Request Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(conversationsApiUrl, neverResolve), ...handlersArray],
@@ -170,6 +175,7 @@ KeepsLoadingWhenChatRequestNeverResolves.test(
 )
 
 export const KeepsLoadingWhenChatRequestNeverResolvesMobile = meta.story({
+	name: 'Conversations Request Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -187,6 +193,7 @@ KeepsLoadingWhenChatRequestNeverResolvesMobile.test(
 )
 
 export const HandlesConversationDetailServerError = meta.story({
+	name: 'Conversation Detail Server Error',
 	parameters: {
 		msw: {
 			handlers: [unreadCountHandler, http.get(conversationDetailApiUrl, to500), ...handlersArray],
@@ -207,6 +214,7 @@ HandlesConversationDetailServerError.test(
 )
 
 export const HandlesConversationDetailServerErrorMobile = meta.story({
+	name: 'Conversation Detail Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -228,6 +236,7 @@ HandlesConversationDetailServerErrorMobile.test(
 )
 
 export const KeepsLoadingWhenConversationDetailNeverResolves = meta.story({
+	name: 'Conversation Detail Loading State',
 	parameters: {
 		msw: {
 			handlers: [
@@ -255,6 +264,7 @@ KeepsLoadingWhenConversationDetailNeverResolves.test(
 )
 
 export const KeepsLoadingWhenConversationDetailNeverResolvesMobile = meta.story({
+	name: 'Conversation Detail Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {

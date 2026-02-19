@@ -19,6 +19,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Timer',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'timer' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -26,7 +27,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders timer heading', async () => {
 	await I.see(loc.timerHeadingAppears)
@@ -42,6 +43,7 @@ Default.test('renders start and reset buttons', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 

@@ -63,6 +63,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Connections',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'connections' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -70,7 +71,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders connection list with all connections', async () => {
 	await I.seeConnectionList()
@@ -114,6 +115,7 @@ Default.test('can select different connections', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 
@@ -161,6 +163,7 @@ DefaultMobile.test('[mobile] can select different connections', async () => {
 })
 
 export const HandlesConnectionsLoadServerError = meta.story({
+	name: 'Connections Load Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(connectionsApiUrl, to500), ...handlersArray],
@@ -187,6 +190,7 @@ HandlesConnectionsLoadServerError.test('shows retry button on error', async () =
 })
 
 export const HandlesConnectionsLoadServerErrorMobile = meta.story({
+	name: 'Connections Load Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -214,6 +218,7 @@ HandlesConnectionsLoadServerErrorMobile.test('[mobile] shows retry button on err
 })
 
 export const KeepsLoadingWhenConnectionsRequestNeverResolves = meta.story({
+	name: 'Connections Request Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(connectionsApiUrl, neverResolve), ...handlersArray],
@@ -230,6 +235,7 @@ KeepsLoadingWhenConnectionsRequestNeverResolves.test(
 )
 
 export const KeepsLoadingWhenConnectionsRequestNeverResolvesMobile = meta.story({
+	name: 'Connections Request Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -247,6 +253,7 @@ KeepsLoadingWhenConnectionsRequestNeverResolvesMobile.test(
 )
 
 export const HandlesConnectionDetailServerError = meta.story({
+	name: 'Connection Detail Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(connectionDetailApiUrl, to500), ...handlersArray],
@@ -267,6 +274,7 @@ HandlesConnectionDetailServerError.test(
 )
 
 export const HandlesConnectionDetailServerErrorMobile = meta.story({
+	name: 'Connection Detail Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -288,6 +296,7 @@ HandlesConnectionDetailServerErrorMobile.test(
 )
 
 export const KeepsLoadingWhenConnectionDetailNeverResolves = meta.story({
+	name: 'Connection Detail Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(connectionDetailApiUrl, neverResolve), ...handlersArray],
@@ -314,6 +323,7 @@ KeepsLoadingWhenConnectionDetailNeverResolves.test(
 )
 
 export const KeepsLoadingWhenConnectionDetailNeverResolvesMobile = meta.story({
+	name: 'Connection Detail Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {

@@ -18,6 +18,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Pages/Calculator',
 	component: CalculatorPage,
 	parameters: { layout: 'centered' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -25,7 +26,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('performs basic addition: 7 + 5 = 12', async () => {
 	await I.press('7')

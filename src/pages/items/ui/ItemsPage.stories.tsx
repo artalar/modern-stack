@@ -53,6 +53,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Pages/Items',
 	component: ItemsPage,
 	args: { items: itemsMockData },
 	parameters: { layout: 'fullscreen' },
@@ -61,7 +62,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders items list', async () => {
 	await I.see(loc.heading)

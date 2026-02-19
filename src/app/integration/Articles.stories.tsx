@@ -60,6 +60,7 @@ const I = createMyself((I) => ({
 }))
 
 const meta = preview.meta({
+	title: 'Integration/Articles',
 	component: App,
 	parameters: { layout: 'fullscreen', initialPath: 'articles' },
 	loaders: [(ctx) => void I.init(ctx)],
@@ -67,7 +68,7 @@ const meta = preview.meta({
 
 export default meta
 
-export const Default = meta.story({})
+export const Default = meta.story({ name: 'Default' })
 
 Default.test('renders article list with all articles', async () => {
 	await I.seeArticleList()
@@ -108,6 +109,7 @@ Default.test('can select different articles', async () => {
 })
 
 export const DefaultMobile = meta.story({
+	name: 'Default (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 })
 
@@ -152,6 +154,7 @@ DefaultMobile.test('[mobile] can select different articles', async () => {
 })
 
 export const HandlesArticlesLoadServerError = meta.story({
+	name: 'Articles Load Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(articlesApiUrl, to500), ...handlersArray],
@@ -175,6 +178,7 @@ HandlesArticlesLoadServerError.test('shows retry button on error', async () => {
 })
 
 export const HandlesArticlesLoadServerErrorMobile = meta.story({
+	name: 'Articles Load Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -202,6 +206,7 @@ HandlesArticlesLoadServerErrorMobile.test('[mobile] shows retry button on error'
 })
 
 export const KeepsLoadingWhenArticlesRequestNeverResolves = meta.story({
+	name: 'Articles Request Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(articlesApiUrl, neverResolve), ...handlersArray],
@@ -218,6 +223,7 @@ KeepsLoadingWhenArticlesRequestNeverResolves.test(
 )
 
 export const KeepsLoadingWhenArticlesRequestNeverResolvesMobile = meta.story({
+	name: 'Articles Request Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -235,6 +241,7 @@ KeepsLoadingWhenArticlesRequestNeverResolvesMobile.test(
 )
 
 export const HandlesArticleDetailServerError = meta.story({
+	name: 'Article Detail Server Error',
 	parameters: {
 		msw: {
 			handlers: [http.get(articleDetailApiUrl, to500), ...handlersArray],
@@ -255,6 +262,7 @@ HandlesArticleDetailServerError.test(
 )
 
 export const HandlesArticleDetailServerErrorMobile = meta.story({
+	name: 'Article Detail Server Error (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
@@ -276,6 +284,7 @@ HandlesArticleDetailServerErrorMobile.test(
 )
 
 export const KeepsLoadingWhenArticleDetailNeverResolves = meta.story({
+	name: 'Article Detail Loading State',
 	parameters: {
 		msw: {
 			handlers: [http.get(articleDetailApiUrl, neverResolve), ...handlersArray],
@@ -302,6 +311,7 @@ KeepsLoadingWhenArticleDetailNeverResolves.test(
 )
 
 export const KeepsLoadingWhenArticleDetailNeverResolvesMobile = meta.story({
+	name: 'Article Detail Loading State (Mobile)',
 	globals: { viewport: { value: 'sm', isRotated: false } },
 	parameters: {
 		msw: {
