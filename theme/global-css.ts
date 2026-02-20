@@ -10,7 +10,7 @@ export const globalCss = {
 			colorPalette: 'gray',
 		},
 		body: {
-			background: 'canvas',
+			background: 'gray.1',
 			color: 'fg.default',
 		},
 	},
