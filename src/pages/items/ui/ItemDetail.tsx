@@ -1,6 +1,6 @@
 import type { Item } from '#entities/item'
 
-import { Badge } from '#shared/components'
+import { Badge, Breadcrumb } from '#shared/components'
 import { styled } from '#styled-system/jsx'
 
 import { CategoryBadge } from './components/CategoryBadge'
@@ -8,19 +8,15 @@ import { CategoryBadge } from './components/CategoryBadge'
 export function ItemDetail({ item }: { item: Item }) {
 	return (
 		<styled.div p="8" maxW="600px">
-			<styled.a
-				href="/items"
-				display="inline-flex"
-				alignItems="center"
-				gap="1"
-				fontSize="sm"
-				color="gray.11"
-				textDecoration="none"
-				mb="6"
-				_hover={{ color: 'gray.12' }}
-			>
-				← Back to Items
-			</styled.a>
+			<Breadcrumb.Root mb="6">
+				<Breadcrumb.List>
+					<Breadcrumb.Item>
+						<Breadcrumb.Link href="/items">Items</Breadcrumb.Link>
+					</Breadcrumb.Item>
+					<Breadcrumb.Separator />
+					<Breadcrumb.Item>{item.name}</Breadcrumb.Item>
+				</Breadcrumb.List>
+			</Breadcrumb.Root>
 
 			<styled.div display="flex" alignItems="center" gap="3" mb="6">
 				<styled.h1 fontSize="2xl" fontWeight="bold">
