@@ -7,7 +7,6 @@ import { getFirstOutletChild, rootRoute } from '#shared/router'
 
 import { ItemDetail } from '../ui/ItemDetail'
 import { ItemDetailLoadingState } from '../ui/ItemDetailLoadingState'
-import { ItemNoSelection } from '../ui/ItemNoSelection'
 import { ItemNotFound } from '../ui/ItemNotFound'
 import { ItemsPage } from '../ui/ItemsPage'
 import { ItemsPageError } from '../ui/ItemsPageError'
@@ -18,7 +17,6 @@ export const itemsRoute = rootRoute.reatomRoute(
 		path: 'items',
 		loader: fetchItems,
 		render: (self): ReactElement => {
-			const selectedItemId = itemDetailRoute()?.itemId
 			const loaderStatus = self.loader.status()
 			const data = self.loader.data()
 			if (loaderStatus.isFirstPending || (loaderStatus.isPending && data == null)) {
@@ -27,14 +25,12 @@ export const itemsRoute = rootRoute.reatomRoute(
 			if (data == null) {
 				return <ItemsPageError onRetry={wrap(() => retryComputed(self.loader))} />
 			}
-			return (
-				<ItemsPage
-					items={data}
-					selectedItemId={selectedItemId}
-					getItemHref={(itemId) => itemDetailRoute.path({ itemId })}
-					detail={getFirstOutletChild(self, <ItemNoSelection />)}
-				/>
-			)
+			// If a child route is active (e.g. /items/:id), render it full page
+			if (itemDetailRoute()) {
+				return getFirstOutletChild(self)
+			}
+			// Otherwise render the full-width list
+			return <ItemsPage items={data} getItemHref={(itemId) => itemDetailRoute.path({ itemId })} />
 		},
 	},
 	'items',

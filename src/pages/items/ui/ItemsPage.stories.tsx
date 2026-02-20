@@ -4,7 +4,6 @@ import preview from '#.storybook/preview'
 import { itemsMockData } from '#entities/item/mocks/data'
 import { createMyself, type Locator } from '#shared/test'
 
-import { ItemNoSelection } from './ItemNoSelection'
 import { ItemsPage } from './ItemsPage'
 
 type Canvas = Parameters<Locator>[0]
@@ -58,9 +57,7 @@ const meta = preview.meta({
 	component: ItemsPage,
 	args: {
 		items: itemsMockData,
-		selectedItemId: undefined,
 		getItemHref: (itemId: string) => `/items/${itemId}`,
-		detail: <ItemNoSelection />,
 	},
 	parameters: { layout: 'fullscreen' },
 	loaders: [(ctx) => void I.init(ctx)],

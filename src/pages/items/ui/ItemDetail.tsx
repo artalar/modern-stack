@@ -7,7 +7,21 @@ import { CategoryBadge } from './components/CategoryBadge'
 
 export function ItemDetail({ item }: { item: Item }) {
 	return (
-		<styled.div p="8">
+		<styled.div p="8" maxW="600px">
+			<styled.a
+				href="/items"
+				display="inline-flex"
+				alignItems="center"
+				gap="1"
+				fontSize="sm"
+				color="gray.11"
+				textDecoration="none"
+				mb="6"
+				_hover={{ color: 'gray.12' }}
+			>
+				← Back to Items
+			</styled.a>
+
 			<styled.div display="flex" alignItems="center" gap="3" mb="6">
 				<styled.h1 fontSize="2xl" fontWeight="bold">
 					{item.name}
