@@ -1,8 +1,7 @@
 'use client'
 import { ark } from '@ark-ui/react/factory'
 import { createContext, mergeProps } from '@ark-ui/react/utils'
-// oxlint-disable-next-line no-restricted-imports
-import { type ComponentProps, useMemo } from 'react'
+import { type ComponentProps } from 'react'
 
 import { styled } from '#styled-system/jsx'
 import { type ButtonVariantProps, button } from '#styled-system/recipes'
@@ -38,10 +37,7 @@ export interface ButtonProps extends BaseButtonProps, ButtonLoadingProps {}
 
 export const Button = function Button({ ref, ...props }: ButtonProps) {
 	const propsContext = useButtonPropsContext()
-	const buttonProps = useMemo(
-		() => mergeProps<ButtonProps>(propsContext, props),
-		[propsContext, props],
-	)
+	const buttonProps = mergeProps<ButtonProps>(propsContext, props)
 
 	const { loading, loadingText, children, spinner, spinnerPlacement, ...rest } = buttonProps
 	return (
@@ -66,7 +62,7 @@ export const Button = function Button({ ref, ...props }: ButtonProps) {
 export interface ButtonGroupProps extends GroupProps, ButtonVariantProps {}
 
 export const ButtonGroup = function ButtonGroup({ ref, ...props }: ButtonGroupProps) {
-	const [variantProps, otherProps] = useMemo(() => button.splitVariantProps(props), [props])
+	const [variantProps, otherProps] = button.splitVariantProps(props)
 	return (
 		<ButtonPropsProvider value={variantProps}>
 			<Group ref={ref} {...otherProps} />

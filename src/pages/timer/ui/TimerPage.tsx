@@ -28,15 +28,15 @@ export const TimerPage = reatomComponent(() => {
 
 	const [customInput, setCustomInput] = useAtom('')
 
-	const handleCustomTimeCommit = () => {
+	const handleCustomTimeCommit = wrap(() => {
 		const parts = customInput.split(':')
 		const minutes = parseInt(parts[0] ?? '0', 10)
 		const seconds = parseInt(parts[1] ?? '0', 10)
 		if (!isNaN(minutes) && !isNaN(seconds) && (minutes > 0 || seconds > 0)) {
-			wrap(() => setDuration(minutes * 60 + seconds))()
+			setDuration(minutes * 60 + seconds)
 		}
 		setCustomInput('')
-	}
+	})
 
 	return (
 		<styled.div p="8" display="flex" justifyContent="center" alignItems="center" minH="100dvh">
