@@ -14,7 +14,7 @@ export function ItemDetail({ item }: { item: Item }) {
 						<Breadcrumb.Link href="/items">Items</Breadcrumb.Link>
 					</Breadcrumb.Item>
 					<Breadcrumb.Separator />
-					<Breadcrumb.Item>{item.name}</Breadcrumb.Item>
+					<Breadcrumb.Item aria-current="page">{item.name}</Breadcrumb.Item>
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
 

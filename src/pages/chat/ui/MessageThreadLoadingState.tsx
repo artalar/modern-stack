@@ -10,7 +10,7 @@ export function MessageThreadLoadingState() {
 			aria-label="Loading message thread"
 			display="flex"
 			flexDirection="column"
-			h="100dvh"
+			h="calc(100dvh - 3.5rem)"
 		>
 			<styled.div
 				px="6"
