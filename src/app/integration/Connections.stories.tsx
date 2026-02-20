@@ -15,7 +15,7 @@ const connectionDetailApiUrl = composeApiUrl(`${CONNECTIONS_API_PATH}/:connectio
 const to500 = () => new HttpResponse(null, { status: 500 })
 
 const loc = {
-	noSelectionMessageAppears: (canvas) => canvas.findByText('Select a connection to view details.'),
+	noSelectionMessageAppears: (canvas) => canvas.findByText('No connection selected'),
 	connectionsLoadingStateAppears: (canvas) =>
 		canvas.findByRole('status', { name: 'Loading connections page' }),
 	connectionsErrorHeadingAppears: (canvas) =>

@@ -25,7 +25,7 @@ const unreadCountHandler = http.get(conversationsUnreadCountApiUrl, () => {
 const to500 = () => new HttpResponse(null, { status: 500 })
 
 const loc = {
-	noSelectionMessageAppears: (canvas) => canvas.findByText('Select a conversation'),
+	noSelectionMessageAppears: (canvas) => canvas.findByText('No conversation selected'),
 	chatLoadingStateAppears: (canvas) => canvas.findByRole('status', { name: 'Loading chat page' }),
 	chatErrorHeadingAppears: (canvas) =>
 		canvas.findByRole('heading', { name: 'Could not load conversations' }),

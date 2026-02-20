@@ -4,7 +4,7 @@ import { Github, Menu, Monitor, Moon, PanelLeft, Search, Sun } from 'lucide-reac
 import { type ReactNode } from 'react'
 
 import { Drawer, IconButton, Input } from '#shared/components'
-import { resolvedThemeAtom, themePreferenceAtom } from '#shared/model/theme'
+import { resolvedThemeAtom, themePreferenceAtom } from '#shared/model'
 import { css } from '#styled-system/css'
 import { styled } from '#styled-system/jsx'
 

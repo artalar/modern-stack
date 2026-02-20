@@ -5,7 +5,7 @@ import { atom, wrap } from '@reatom/core'
 import { reatomComponent } from '@reatom/react'
 
 import { Button, Input, Select } from '#shared/components'
-import { themePreferenceAtom } from '#shared/model/theme'
+import { themePreferenceAtom } from '#shared/model'
 import { styled } from '#styled-system/jsx'
 
 import { FieldRow } from './components/FieldRow'

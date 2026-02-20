@@ -15,7 +15,7 @@ const articleDetailApiUrl = composeApiUrl(`${ARTICLES_API_PATH}/:articleId`)
 const to500 = () => new HttpResponse(null, { status: 500 })
 
 const loc = {
-	noSelectionMessageAppears: (canvas) => canvas.findByText('Select an article to view details.'),
+	noSelectionMessageAppears: (canvas) => canvas.findByText('No article selected'),
 	articlesLoadingStateAppears: (canvas) =>
 		canvas.findByRole('status', { name: 'Loading articles page' }),
 	articlesErrorHeadingAppears: (canvas) =>

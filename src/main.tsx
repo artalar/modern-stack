@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client'
 
 import { App } from '#app/App.tsx'
 import { startBrowserMocking } from '#app/mocks/browser'
-import { resolvedThemeAtom } from '#shared/model/theme'
+import { resolvedThemeAtom } from '#shared/model'
 import { css } from '#styled-system/css'
 
 await startBrowserMocking()
