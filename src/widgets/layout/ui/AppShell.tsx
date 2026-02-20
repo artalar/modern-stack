@@ -1,9 +1,10 @@
 import { reatomBoolean, wrap } from '@reatom/core'
 import { reatomComponent } from '@reatom/react'
-import { Menu, PanelLeft } from 'lucide-react'
+import { Github, Menu, Monitor, Moon, PanelLeft, Search, Sun } from 'lucide-react'
 import { type ReactNode } from 'react'
 
-import { Drawer, IconButton } from '#shared/components'
+import { Drawer, IconButton, Input } from '#shared/components'
+import { resolvedThemeAtom, themePreferenceAtom } from '#shared/model/theme'
 import { css } from '#styled-system/css'
 import { styled } from '#styled-system/jsx'
 
@@ -23,6 +24,12 @@ const desktopSidebarCollapsedAtom = reatomBoolean(false)
 export const AppShell = reatomComponent(
 	({ sidebarHeader, sidebarContent, sidebarFooter, mobileHeader, children }: AppShellProps) => {
 		const isCollapsed = desktopSidebarCollapsedAtom()
+		const preference = themePreferenceAtom()
+		const resolved = resolvedThemeAtom()
+		const cycleTheme = wrap(() => {
+			const next = { system: 'light', light: 'dark', dark: 'system' } as const
+			themePreferenceAtom.set(next[preference])
+		})
 
 		const sidebarInner = (
 			<>
@@ -125,7 +132,60 @@ export const AppShell = reatomComponent(
 							<Menu className={css({ w: '5', h: '5' })} />
 						</IconButton>
 						<styled.div w="1px" h="5" bg="gray.5" flexShrink={0} />
-						{mobileHeader}
+						<styled.div display={{ base: 'flex', md: 'none' }} alignItems="center">
+							{mobileHeader}
+						</styled.div>
+						<styled.div
+							display={{ base: 'none', md: 'flex' }}
+							alignItems="center"
+							flex="1"
+							gap="2"
+							maxW="480px"
+						>
+							<Search className={css({ w: '4', h: '4', color: 'gray.10', flexShrink: 0 })} />
+							<Input
+								placeholder="Search..."
+								size="sm"
+								variant="outline"
+								bg="transparent"
+								borderWidth="0"
+								_focus={{ borderWidth: '0', outline: 'none', boxShadow: 'none' }}
+							/>
+							<styled.kbd fontSize="xs" color="gray.9" flexShrink={0}>
+								⌘K
+							</styled.kbd>
+						</styled.div>
+						<styled.div ml="auto" />
+						<IconButton
+							variant="plain"
+							size="sm"
+							display={{ base: 'none', md: 'inline-flex' }}
+							asChild
+							aria-label="View source on GitHub"
+						>
+							<a
+								href="https://github.com/guria/modern-stack"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Github className={css({ w: '4', h: '4' })} />
+							</a>
+						</IconButton>
+						<IconButton
+							variant="plain"
+							size="sm"
+							display={{ base: 'none', md: 'inline-flex' }}
+							onClick={cycleTheme}
+							aria-label="Toggle theme"
+						>
+							{preference === 'system' ? (
+								<Monitor className={css({ w: '4', h: '4' })} />
+							) : resolved === 'dark' ? (
+								<Moon className={css({ w: '4', h: '4' })} />
+							) : (
+								<Sun className={css({ w: '4', h: '4' })} />
+							)}
+						</IconButton>
 					</styled.header>
 					{children}
 				</styled.div>

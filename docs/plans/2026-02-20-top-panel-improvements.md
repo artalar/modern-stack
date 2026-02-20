@@ -148,10 +148,10 @@ rootFrame.run((ctx) => {
 
 **Steps:**
 
-- [ ] In `AppShell.tsx`, add `import { Github, Moon, Search, Sun, Monitor } from 'lucide-react'` to existing lucide imports
-- [ ] Import `resolvedThemeAtom`, `themePreferenceAtom` from the shared model file
-- [ ] Wrap `{mobileHeader}` in `<styled.div display={{ base: 'flex', md: 'none' }} alignItems="center">` to hide it on desktop
-- [ ] After the mobileHeader div, add desktop search input (hidden on mobile):
+- [x] In `AppShell.tsx`, add `import { Github, Moon, Search, Sun, Monitor } from 'lucide-react'` to existing lucide imports
+- [x] Import `resolvedThemeAtom`, `themePreferenceAtom` from the shared model file
+- [x] Wrap `{mobileHeader}` in `<styled.div display={{ base: 'flex', md: 'none' }} alignItems="center">` to hide it on desktop
+- [x] After the mobileHeader div, add desktop search input (hidden on mobile):
   ```tsx
   <styled.div
   	display={{ base: 'none', md: 'flex' }}
@@ -174,8 +174,8 @@ rootFrame.run((ctx) => {
   	</styled.kbd>
   </styled.div>
   ```
-- [ ] Add `<styled.div ml="auto" />` spacer after the search div
-- [ ] Add GitHub `IconButton` (desktop only):
+- [x] Add `<styled.div ml="auto" />` spacer after the search div
+- [x] Add GitHub `IconButton` (desktop only):
   ```tsx
   <IconButton
   	variant="plain"
@@ -190,7 +190,7 @@ rootFrame.run((ctx) => {
   	<Github className={css({ w: '4', h: '4' })} />
   </IconButton>
   ```
-- [ ] Add theme toggle `IconButton` (desktop only). Read `resolvedThemeAtom` for the icon; read `themePreferenceAtom` for cycling:
+- [x] Add theme toggle `IconButton` (desktop only). Read `resolvedThemeAtom` for the icon; read `themePreferenceAtom` for cycling:
   ```tsx
   const preference = themePreferenceAtom()
   const resolved = resolvedThemeAtom()
@@ -203,7 +203,7 @@ rootFrame.run((ctx) => {
     {preference === 'system' ? <Monitor ... /> : resolved === 'dark' ? <Moon ... /> : <Sun ... />}
   </IconButton>
   ```
-- [ ] Run `npm run typecheck` — no errors
+- [x] Run `npm run typecheck` — no errors
 
 ---
 
