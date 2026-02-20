@@ -229,15 +229,15 @@ The local `themeAtom` (line 24) is a dummy — not connected to anything. Replac
 
 ## Task 4: Final verification
 
-- [ ] Open `http://localhost:5100/dashboard` in desktop view — top bar shows search field (no "Dashboard" label), page content still shows `<h1>Dashboard</h1>`
-- [ ] Open `http://localhost:5100/chat/1` in desktop view — top bar shows search field (no conversation header duplication), content still shows the Engineering conversation header
-- [ ] Toggle theme button cycles Sun → Moon → Monitor → Sun, page switches light/dark/system visually
-- [ ] Reload page — theme preference is restored from localStorage
-- [ ] Open Settings → Appearance → Theme select shows current preference; changing it updates the page immediately without needing to click Save
-- [ ] GitHub icon opens `https://github.com/guria/modern-stack` in new tab
-- [ ] Resize to mobile (< md) — search and icon buttons are hidden; mobile header title is still visible
-- [ ] Run `npm run typecheck` — clean
-- [ ] Run `npm run test:run` — no regressions
+- [x] Open `http://localhost:5100/dashboard` in desktop view — top bar shows search field (no "Dashboard" label), page content still shows `<h1>Dashboard</h1>`
+- [x] Open `http://localhost:5100/chat/1` in desktop view — top bar shows search field (no conversation header duplication), content still shows the Engineering conversation header
+- [x] Toggle theme button cycles Sun → Moon → Monitor → Sun, page switches light/dark/system visually
+- [x] Reload page — theme preference is restored from localStorage
+- [x] Open Settings → Appearance → Theme select shows current preference; changing it updates the page immediately without needing to click Save
+- [x] GitHub icon opens `https://github.com/guria/modern-stack` in new tab
+- [x] Resize to mobile (< md) — search and icon buttons are hidden; mobile header title is still visible
+- [x] Run `npm run typecheck` — clean
+- [x] Run `npm run test:run` — no regressions
 
 ---
 
