@@ -1,3 +1,4 @@
+import { Button } from '#shared/components'
 import { styled } from '#styled-system/jsx'
 
 import { breakdown, percentage, totalGB, usedGB } from '../model/data'
@@ -29,9 +30,14 @@ export function UsagePage() {
 			<styled.div mb="8">
 				<styled.div display="flex" alignItems="center" justifyContent="space-between" mb="2">
 					<styled.span fontWeight="medium">Storage</styled.span>
-					<styled.span fontSize="sm" color="gray.11">
-						{usedGB} GB of {totalGB} GB used
-					</styled.span>
+					<styled.div display="flex" alignItems="center" gap="3">
+						<styled.span fontSize="sm" color="gray.11">
+							{usedGB} GB of {totalGB} GB used
+						</styled.span>
+						<Button size="xs" variant="outline" asChild>
+							<styled.a href="/pricing">Manage plan</styled.a>
+						</Button>
+					</styled.div>
 				</styled.div>
 				<styled.div w="full" h="3" bg="gray.4" borderRadius="full" overflow="hidden" mb="1">
 					<styled.div
