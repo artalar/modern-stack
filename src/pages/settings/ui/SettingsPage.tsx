@@ -5,6 +5,7 @@ import { atom, wrap } from '@reatom/core'
 import { reatomComponent } from '@reatom/react'
 
 import { Button, Input, Select } from '#shared/components'
+import { themePreferenceAtom } from '#shared/model/theme'
 import { styled } from '#styled-system/jsx'
 
 import { FieldRow } from './components/FieldRow'
@@ -21,9 +22,7 @@ const desktopNotifAtom = atom('enabled', 'settings.desktopNotif')
 const notifDirtyAtom = atom(false, 'settings.notifDirty')
 
 // Appearance atoms
-const themeAtom = atom('system', 'settings.theme')
 const densityAtom = atom('comfortable', 'settings.density')
-const appearanceDirtyAtom = atom(false, 'settings.appearanceDirty')
 
 const emailNotificationsCollection = createListCollection({
 	items: [
@@ -73,9 +72,8 @@ export const SettingsPage = reatomComponent(() => {
 	const desktopNotif = desktopNotifAtom()
 	const notifDirty = notifDirtyAtom()
 
-	const theme = themeAtom()
+	const theme = themePreferenceAtom()
 	const density = densityAtom()
-	const appearanceDirty = appearanceDirtyAtom()
 
 	return (
 		<styled.div p="8" maxW="800px">
@@ -214,16 +212,7 @@ export const SettingsPage = reatomComponent(() => {
 				</FieldRow>
 			</Section>
 
-			<Section
-				title="Appearance"
-				footer={
-					appearanceDirty ? (
-						<Button size="sm" onClick={wrap(() => appearanceDirtyAtom.set(false))}>
-							Save changes
-						</Button>
-					) : null
-				}
-			>
+			<Section title="Appearance">
 				<FieldRow label="Theme" description="Choose your preferred color scheme.">
 					<Select.Root
 						collection={themeCollection}
@@ -234,8 +223,7 @@ export const SettingsPage = reatomComponent(() => {
 							(details: Select.ValueChangeDetails<{ label: string; value: string }>) => {
 								const val = details.value[0]
 								if (val !== undefined) {
-									themeAtom.set(val)
-									appearanceDirtyAtom.set(true)
+									themePreferenceAtom.set(val as 'system' | 'light' | 'dark')
 								}
 							},
 						)}
@@ -273,7 +261,6 @@ export const SettingsPage = reatomComponent(() => {
 								const val = details.value[0]
 								if (val !== undefined) {
 									densityAtom.set(val)
-									appearanceDirtyAtom.set(true)
 								}
 							},
 						)}

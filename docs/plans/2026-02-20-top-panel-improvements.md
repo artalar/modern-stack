@@ -215,15 +215,15 @@ The local `themeAtom` (line 24) is a dummy — not connected to anything. Replac
 
 **Steps:**
 
-- [ ] In `SettingsPage.tsx`, remove `const themeAtom = atom('system', 'settings.theme')` (line 24)
-- [ ] Remove `appearanceDirtyAtom` (line 26) — theme changes are instant, no "Save" needed
-- [ ] Remove `appearanceDirty` variable usage in the render (line 78, 220–223)
-- [ ] Import `themePreferenceAtom` from the shared model
-- [ ] Update theme `Select.Root` to use `themePreferenceAtom` instead of the local atom:
+- [x] In `SettingsPage.tsx`, remove `const themeAtom = atom('system', 'settings.theme')` (line 24)
+- [x] Remove `appearanceDirtyAtom` (line 26) — theme changes are instant, no "Save" needed
+- [x] Remove `appearanceDirty` variable usage in the render (line 78, 220–223)
+- [x] Import `themePreferenceAtom` from the shared model
+- [x] Update theme `Select.Root` to use `themePreferenceAtom` instead of the local atom:
   - `value={[themePreferenceAtom()]}` — read as `themePreference`
   - `onValueChange`: `themePreferenceAtom.set(val)` (no dirty state)
-- [ ] Remove the "Appearance" `Section` `footer` prop (was showing Save button)
-- [ ] Run `npm run typecheck` — no errors
+- [x] Remove the "Appearance" `Section` `footer` prop (was showing Save button)
+- [x] Run `npm run typecheck` — no errors
 
 ---
 
