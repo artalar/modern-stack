@@ -1,7 +1,7 @@
 import { wrap } from '@reatom/core'
-import { reatomComponent } from '@reatom/react'
+import { reatomComponent, useAtom } from '@reatom/react'
 
-import { Button } from '#shared/components'
+import { Button, Input } from '#shared/components'
 import { styled } from '#styled-system/jsx'
 
 import {
@@ -25,6 +25,18 @@ const PRESETS = [
 export const TimerPage = reatomComponent(() => {
 	const remaining = timerRemainingAtom()
 	const running = timerRunningAtom()
+
+	const [customInput, setCustomInput] = useAtom('')
+
+	const handleCustomTimeCommit = () => {
+		const parts = customInput.split(':')
+		const minutes = parseInt(parts[0] ?? '0', 10)
+		const seconds = parseInt(parts[1] ?? '0', 10)
+		if (!isNaN(minutes) && !isNaN(seconds) && (minutes > 0 || seconds > 0)) {
+			wrap(() => setDuration(minutes * 60 + seconds))()
+		}
+		setCustomInput('')
+	}
 
 	return (
 		<styled.div p="8" display="flex" justifyContent="center" alignItems="center" minH="100dvh">
@@ -55,6 +67,19 @@ export const TimerPage = reatomComponent(() => {
 						</Button>
 					))}
 				</styled.div>
+
+				<Input
+					placeholder="MM:SS"
+					size="sm"
+					w="20"
+					value={customInput}
+					disabled={running}
+					onChange={(e) => setCustomInput(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') handleCustomTimeCommit()
+					}}
+					onBlur={handleCustomTimeCommit}
+				/>
 
 				<styled.div display="flex" gap="2">
 					{running ? (
