@@ -5,6 +5,6 @@ clearStack()
 
 export const rootFrame = context.start()
 
-if (import.meta.env['DEV']) {
+if (import.meta.env['VITE_CONNECT_LOGGER']) {
 	rootFrame.run(connectLogger)
 }
