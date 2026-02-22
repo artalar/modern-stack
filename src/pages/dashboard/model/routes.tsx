@@ -1,4 +1,4 @@
-import { retryComputed, urlAtom, withChangeHook, wrap } from '@reatom/core'
+import { urlAtom, withChangeHook, wrap } from '@reatom/core'
 
 import { fetchDashboardData } from '#entities/dashboard'
 import { rootRoute } from '#shared/router'
@@ -25,7 +25,7 @@ export const dashboardRoute = rootRoute.reatomRoute(
 				return <DashboardPageLoading />
 			}
 			if (data == null) {
-				return <DashboardPageError onRetry={wrap(() => retryComputed(self.loader))} />
+				return <DashboardPageError onRetry={wrap(self.loader.retry)} />
 			}
 			return <DashboardPage data={data} />
 		},
